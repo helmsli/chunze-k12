@@ -11,20 +11,25 @@ import com.yoyo.chunze.utils.BaseDomain;
  */
 public class TaskDetail extends MainTask {
 	
-	//使用系统时间
+	//使用系统时间, YYYYMMDDHH24MISS+taskType(两位)
 	private long subTaskId;
 	private String evaluationId;
 	private String content;
 	private Date startTime;
-	private int parentLevel;//父母表现评级
+	private int parentLevel=0;//父母表现评级
 	private String parentRemark;//父母表现备注
-	private int childLevel;
+	private int childLevel=0;
 	private String childRemark;
 	private int taskState;
-	private int taskStatus;
-	private int completeProgress;
 	
+	private int completeProgress=0;
+	/**
+	 * 周数
+	 */
+	private int weeksAmount;
 	
+	private Date weekBeginTime;
+	private Date weekEndTime;
 	public long getSubTaskId() {
 		return subTaskId;
 	}
@@ -79,17 +84,30 @@ public class TaskDetail extends MainTask {
 	public void setTaskState(int taskState) {
 		this.taskState = taskState;
 	}
-	public int getTaskStatus() {
-		return taskStatus;
-	}
-	public void setTaskStatus(int taskStatus) {
-		this.taskStatus = taskStatus;
-	}
+	
 	public int getCompleteProgress() {
 		return completeProgress;
 	}
 	public void setCompleteProgress(int completeProgress) {
 		this.completeProgress = completeProgress;
+	}
+	public int getWeeksAmount() {
+		return weeksAmount;
+	}
+	public void setWeeksAmount(int weeksAmount) {
+		this.weeksAmount = weeksAmount;
+	}
+	public Date getWeekBeginTime() {
+		return weekBeginTime;
+	}
+	public void setWeekBeginTime(Date weekBeginTime) {
+		this.weekBeginTime = weekBeginTime;
+	}
+	public Date getWeekEndTime() {
+		return weekEndTime;
+	}
+	public void setWeekEndTime(Date weekEndTime) {
+		this.weekEndTime = weekEndTime;
 	}
 	
 	

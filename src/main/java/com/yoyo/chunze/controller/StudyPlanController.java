@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.company.cooChatWx.domain.ChatMsg;
+
 import com.xinwei.nnl.common.domain.ProcessResult;
 import com.yoyo.chunze.domain.ConfigTaskRequest;
 import com.yoyo.chunze.utils.ControllerUtils;

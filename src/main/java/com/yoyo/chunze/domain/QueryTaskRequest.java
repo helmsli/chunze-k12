@@ -9,6 +9,7 @@ public class QueryTaskRequest extends BaseDomain {
 	private String babyId;
 	private int courseType;
 	private int taskState;
+	private int taskType;
 	private Date taskTime;
 	public String getUserId() {
 		return userId;
@@ -39,6 +40,12 @@ public class QueryTaskRequest extends BaseDomain {
 	}
 	public void setTaskTime(Date taskTime) {
 		this.taskTime = taskTime;
+	}
+	public int getTaskType() {
+		return taskType;
+	}
+	public void setTaskType(int taskType) {
+		this.taskType = taskType;
 	}
 	
 }

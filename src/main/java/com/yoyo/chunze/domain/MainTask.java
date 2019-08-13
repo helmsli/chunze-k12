@@ -19,12 +19,16 @@ public class MainTask extends BaseDomain{
 	private String taskTitle;
 	private int courseType;
 	private int periodType;
+	/**
+	 * 如果是周任务，1,2,3,4,5,6,7
+	 */
 	private List<String> period;
 	private boolean isValid;//生否生效
 	private String content;
 	private boolean isComplete;
 	private String description;
 	private int completeProgress;
+	//客户端设置的时间
 	private Date startTime;
 	public long getTaskId() {
 		return taskId;
