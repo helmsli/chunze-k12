@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.xinwei.nnl.common.domain.ProcessResult;
 import com.xinwei.nnl.common.util.JsonUtil;
 import com.xinwei.userOrder.domain.QueryUserOrderRequest;
 import com.xinwei.userOrder.domain.UserOrder;
 import com.yoyo.chunze.domain.ConfigTaskRequest;
+import com.yoyo.chunze.domain.ConfigureTaskDetail;
 import com.yoyo.chunze.domain.CourseTypeEnum;
 import com.yoyo.chunze.domain.MainTask;
 import com.yoyo.chunze.domain.PeriodTypeEnum;
@@ -27,21 +30,27 @@ import com.yoyo.chunze.orderService.OrderClientService;
 import com.yoyo.chunze.orderService.UserOrderQueryResult;
 import com.yoyo.chunze.security.utils.DateWeekUtils;
 import com.yoyo.chunze.utils.ControllerUtils;
-
+@Service("babyTaskService")
 public class BabyTaskService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private OrderClientService orderClientService;
 
-	private static final String category_baby_taskMain = "babyTask";
+	private static final String category_baby_taskMain = "babyMainTask";
 
 	private static final String category_baby_taskRunning = "babyTRunning";
 
+	
+	
 	protected String getMainTaskOrderId(String babyId, int courseType, int taskType) {
 		return "#b" + babyId + "#c" + courseType + "#t" + String.valueOf(taskType) + "#";
 	}
 
+	protected String getTaskDetailOrderId(String taskId,long subTaskId) {
+		return "#d" + String.valueOf(taskId) + "#" + String.valueOf(subTaskId)+"#";
+	}
+	
 	protected String getTaskRunningOrderId() {
 		return "";
 	}
@@ -67,6 +76,15 @@ public class BabyTaskService {
 			}
 			mainTask.setUserId(configTaskRequest.getUserId());
 			mainTask.setBabyId(configTaskRequest.getBabyId());
+			//构造taskId
+			String taskId = this.orderClientService.getOrderId(category_baby_taskMain, configTaskRequest.getUserId());
+			if(StringUtils.isEmpty(taskId))
+			{
+				logger.error("configureMainTask get taskId,error");
+				return ControllerUtils.getErrorResponse(-1, "get taskId error");
+				
+			}
+			mainTask.setTaskId(Long.parseLong(taskId));
 			userOrder.setOrderData(JsonUtil.toJson(mainTask));
 			ProcessResult ret = this.orderClientService.saveUserOrder(null, userOrder);
 			if (ret.getRetCode() != 0) {
@@ -178,13 +196,21 @@ public class BabyTaskService {
 		return ret;
 	}
 	
-	
+	public ProcessResult configureBabyTask(ConfigureTaskDetail configureTaskDetail) {
+	    UserOrder userOrder = new UserOrder();
+	    userOrder.setCategory(category_baby_taskRunning);
+	    userOrder.setCreateTime(configureTaskDetail.getTaskDetail().getStartTime());
+	    userOrder.setUserId(configureTaskDetail.getUserId());
+	    userOrder.setStatus(TaskStateEnum.Running.ordinal());
+	    userOrder.setOrderData(JsonUtil.toJson(configureTaskDetail.getTaskDetail()));
+	    return this.orderClientService.saveUserOrder(null, userOrder);
+	}
 	/**
 	 * 查询用户正在执行的任务
 	 * @param queryTaskRequest
 	 * @return
 	 */
-	public ProcessResult queryBabyRunningTask(QueryTaskRequest queryTaskRequest) {
+	protected ProcessResult queryBabyRunningTask(QueryTaskRequest queryTaskRequest) {
 
 		// 如果是周任務
 		Date firstWeekDate = DateWeekUtils.getWeekStartTime();
