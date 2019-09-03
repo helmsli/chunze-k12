@@ -25,6 +25,7 @@ public class MainTask extends BaseDomain{
 	 */
 	private List<String> period;
 	private boolean isValid;//生否生效
+	//任务描述
 	private String content;
 	private boolean isComplete;
 	private String description;

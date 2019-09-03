@@ -63,7 +63,7 @@ public class DateWeekUtils {
 	        day_of_week = 7 ;
 	    }
 	    cal.add(Calendar.DATE , -day_of_week + 7 );
-	    cal.add(Calendar.DATE , -day_of_week + 1 );
+	    //cal.add(Calendar.DATE , -day_of_week + 1 );
 	    cal.set(Calendar.HOUR_OF_DAY, 0);
 	    cal.set(Calendar.MINUTE, 0);
 	    cal.set(Calendar.SECOND, 0);
