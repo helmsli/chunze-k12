@@ -42,6 +42,7 @@ public class DateWeekUtils {
 			{
 				throw new Exception("period error"); 
 			}
+			iPeriod = iPeriod -1;
 			Date beginTime = getWeekStartTime(dateTime);
 			Calendar beginCal = Calendar.getInstance();
 			beginCal.setTime(beginTime);

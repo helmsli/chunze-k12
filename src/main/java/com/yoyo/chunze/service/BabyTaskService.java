@@ -161,6 +161,7 @@ public class BabyTaskService {
 		{
 			return ret;
 		}
+		logger.debug(ret.toString());
 		List<TaskDetail> newlist = (List<TaskDetail>)ret.getResponseInfo();
 		if(newlist.size()>0)
 		{
@@ -169,8 +170,18 @@ public class BabyTaskService {
 		ret = this.queryMainTask(queryTaskRequest);
 		if(ret.getRetCode()==0)
 		{
+			List<MainTask> mainTaskList= null;
 			List<TaskDetail> retTaskDetailList=new ArrayList<>();
-			List<MainTask> mainTaskList = (List<MainTask>)ret.getResponseInfo();
+			
+			if(ret.getResponseInfo()!=null)
+			{
+				mainTaskList = (List<MainTask>)ret.getResponseInfo();
+			}
+			//构造默认的对象
+			if(mainTaskList==null||mainTaskList.size()==0)
+			{
+				mainTaskList = createDefaultMainTask();
+			}
 			List<TaskDetail> taskDetailList = this.getTaskDetailFromMainTask(mainTaskList);
 			for(TaskDetail taskDetail:taskDetailList)
 			{
@@ -264,5 +275,37 @@ public class BabyTaskService {
 		ret = ControllerUtils.getSuccessResponse(null);
 		ret.setResponseInfo(queryTaskResponse);
 		return ret;
+	}
+	/**
+	 * 创建默认的任务列表
+	 * @return
+	 */
+	protected List<MainTask> createDefaultMainTask()
+	{
+		List<MainTask> list= new ArrayList<>();
+		MainTask mainTask= new MainTask();
+		mainTask.setValid(false);
+		mainTask.addOnePeriod("1");
+		mainTask.setCourseType(CourseTypeEnum.Mathematics.ordinal());
+		mainTask.setPeriodType(PeriodTypeEnum.Week.ordinal());
+		mainTask.setTaskType(TaskTypeEnum.ClassRoomContent.ordinal());
+		mainTask.addOnePeriod("1");
+		list.add(mainTask);
+		mainTask= new MainTask();
+		mainTask.setValid(false);
+		mainTask.setCourseType(CourseTypeEnum.Mathematics.ordinal());
+		mainTask.setPeriodType(PeriodTypeEnum.Week.ordinal());
+		mainTask.setTaskType(TaskTypeEnum.OralArithmetic.ordinal());
+		mainTask.addOnePeriod("1");
+		list.add(mainTask);
+		mainTask= new MainTask();
+		mainTask.addOnePeriod("1");
+		mainTask.setValid(false);
+		mainTask.setCourseType(CourseTypeEnum.Mathematics.ordinal());
+		mainTask.setPeriodType(PeriodTypeEnum.Week.ordinal());
+		mainTask.setTaskType(TaskTypeEnum.PracticeInClass.ordinal());
+		list.add(mainTask);
+		
+		return list;
 	}
 }

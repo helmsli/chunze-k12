@@ -1,5 +1,6 @@
 package com.yoyo.chunze.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +63,17 @@ public class MainTask extends BaseDomain{
 	}
 	public List<String> getPeriod() {
 		return period;
+	}
+	public void addOnePeriod(String onePeriod)
+	{
+		if(period==null)
+		{
+			period = new ArrayList<String>();
+		}
+		if(!period.contains(onePeriod))
+		{
+			period.add(onePeriod);
+		}
 	}
 	public void setPeriod(List<String> period) {
 		this.period = period;
