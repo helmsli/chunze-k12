@@ -162,7 +162,9 @@ public class BabyTaskService {
 			return ret;
 		}
 		logger.debug(ret.toString());
-		List<TaskDetail> newlist = (List<TaskDetail>)ret.getResponseInfo();
+		QueryTaskResponse queryTaskResponse = (QueryTaskResponse)ret.getResponseInfo();
+		
+		List<TaskDetail> newlist = queryTaskResponse.getTaskDetailList();
 		if(newlist.size()>0)
 		{
 			return ret;
