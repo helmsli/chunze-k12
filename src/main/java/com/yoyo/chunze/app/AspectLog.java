@@ -27,7 +27,7 @@ public class AspectLog {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	//申明一个切点 里面是 execution表达式 com.company.coursestudent
-	@Pointcut("execution(public * com.company.cooChatWx.history.mapper..*.*(..)) ||  execution(public * com.company.cooChatWx.history.service..*.*(..)) ||  execution(public * com.company.cooChatWx.user.service..*.*(..)) ||  execution(public * com.company.cooChatWx.account..*.*(..)) ||  execution(public * com.company.cooChatWx.account.recharge..*.*(..)) ||  execution(public * com.company.cooChatWx.service..*.*(..)) ||  execution(public * com.company.cooChatWx.controller.rest..*.*(..)) ")
+	@Pointcut("execution(public * com.company.cooChatWx.history.mapper..*.*(..)) ||  execution(public * com.company.cooChatWx.history.service..*.*(..)) ||  execution(public * com.company.cooChatWx.user.service..*.*(..)) ||  execution(public * com.company.cooChatWx.account..*.*(..)) ||  execution(public * com.company.cooChatWx.account.recharge..*.*(..)) ||  execution(public * com.yoyo.chunze.service..*.*(..)) ||  execution(public * com.yoyo.chunze.controller..*.*(..)) ")
 	public void mylogPoint() {
 	}
 
