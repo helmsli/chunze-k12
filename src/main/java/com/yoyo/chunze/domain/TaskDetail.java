@@ -21,7 +21,8 @@ public class TaskDetail extends MainTask {
 	private int childLevel=0;
 	private String childRemark;
 	private int taskState;
-	
+	//具体任务的当前周期ID
+	private String nowPeriodId;
 	private int completeProgress=0;
 	/**
 	 * 周数
@@ -108,6 +109,12 @@ public class TaskDetail extends MainTask {
 	}
 	public void setWeekEndTime(Date weekEndTime) {
 		this.weekEndTime = weekEndTime;
+	}
+	public String getNowPeriodId() {
+		return nowPeriodId;
+	}
+	public void setNowPeriodId(String nowPeriodId) {
+		this.nowPeriodId = nowPeriodId;
 	}
 	
 	

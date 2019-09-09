@@ -227,9 +227,11 @@ public class BabyTaskService {
 
 		// 如果是周任務
 		Date firstWeekDate = DateWeekUtils.getWeekStartTime();
+		Date endWeekDate = DateWeekUtils.getWeekEndTime();
+		
 		QueryUserOrderRequest queryUserOrderRequest = new QueryUserOrderRequest();
 		queryUserOrderRequest.setStartCreateTime(firstWeekDate);
-		queryUserOrderRequest.setEndCreateTime(firstWeekDate);
+		queryUserOrderRequest.setEndCreateTime(endWeekDate);
 		queryUserOrderRequest.setCategory(category_baby_taskRunning);
 		// 0 查詢所有
 		queryUserOrderRequest.setStatus(queryTaskRequest.getTaskState());

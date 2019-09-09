@@ -39,6 +39,7 @@ public class TaskUtils {
 					taskDetail.setTaskState(TaskStateEnum.Running.ordinal());
 				}
 				try {
+					taskDetail.setNowPeriodId(period);
 					taskDetail.setStartTime(DateWeekUtils.getWeekTime(now.getTime(), period));
 					taskDetail.setWeeksAmount(DateWeekUtils.getWeekAmount());
 					taskDetail.setWeekBeginTime(DateWeekUtils.getWeekStartTime());
