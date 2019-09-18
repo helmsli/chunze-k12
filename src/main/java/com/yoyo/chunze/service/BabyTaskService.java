@@ -2,7 +2,9 @@ package com.yoyo.chunze.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,10 +22,12 @@ import com.yoyo.chunze.domain.ConfigureTaskDetail;
 import com.yoyo.chunze.domain.CourseTypeEnum;
 import com.yoyo.chunze.domain.MainTask;
 import com.yoyo.chunze.domain.PeriodTypeEnum;
+import com.yoyo.chunze.domain.QueryTaskDetailRsp;
 import com.yoyo.chunze.domain.QueryTaskRequest;
 import com.yoyo.chunze.domain.QueryTaskResponse;
 import com.yoyo.chunze.domain.TaskDetail;
 import com.yoyo.chunze.domain.TaskStateEnum;
+import com.yoyo.chunze.domain.TaskTotal;
 import com.yoyo.chunze.domain.TaskTypeEnum;
 import com.yoyo.chunze.domain.WeekTaskDetail;
 import com.yoyo.chunze.orderService.OrderClientService;
@@ -148,14 +152,42 @@ public class BabyTaskService {
 		return taskDetailList;
 	}
 	
-	
-	
+	public ProcessResult queryBabyTask(QueryTaskRequest queryTaskRequest) {
+	  	ProcessResult ret  = this.queryBabyTaskList(queryTaskRequest);
+	  	if(ret.getRetCode()!=0)
+	  	{
+	  		return ret;
+	  	}
+	  	QueryTaskDetailRsp taskDetailRsp = new QueryTaskDetailRsp();
+	  	taskDetailRsp.setTaskDetailList((List<TaskDetail>)ret.getResponseInfo());
+	  	ret.setResponseInfo(taskDetailRsp);
+	  	Map<Integer,TaskTotal> maps = new HashMap<Integer,TaskTotal>();
+	  	for(TaskDetail taskDetail :taskDetailRsp.getTaskDetailList())
+	  	{
+	  		TaskTotal taskTotal = null;
+	  		Integer iType = new Integer(taskDetail.getTaskType());
+	  		if(maps.containsKey(iType))
+	  		{
+	  			taskTotal = maps.get(iType);
+	  		}
+	  		else
+	  		{
+	  			taskTotal = new TaskTotal();
+	  			maps.put(iType, taskTotal);
+	  			taskDetailRsp.getTotal().add(taskTotal);
+	  		}
+	  		taskTotal.increaseSubTotal();
+	  		taskTotal.addCompleteProgress(taskDetail.getCompleteProgress());
+	  		
+	  	}
+	  	return ret;
+	}
 	/**
 	 * 查询孩子已经配置的任务
 	 * @param queryTaskRequest
-	 * @return
+	 * @return List
 	 */
-	public ProcessResult queryBabyTask(QueryTaskRequest queryTaskRequest) {
+	public ProcessResult queryBabyTaskList(QueryTaskRequest queryTaskRequest) {
 		ProcessResult ret = this.queryBabyRunningTask(queryTaskRequest);
 		if(ret.getRetCode()!=0)
 		{
