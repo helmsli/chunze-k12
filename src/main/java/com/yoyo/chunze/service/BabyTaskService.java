@@ -145,8 +145,10 @@ public class BabyTaskService {
 	protected List<TaskDetail> getTaskDetailFromMainTask(List<MainTask> mainTaskList)
 	{
 		List<TaskDetail> taskDetailList = new ArrayList<>();
+		logger.error(JsonUtil.toJson(mainTaskList));
 		for(MainTask mainTask:mainTaskList)
 		{
+			logger.error(mainTask.toString());
 			taskDetailList.addAll(TaskUtils.getTaskDetail(mainTask));
 		}
 		return taskDetailList;
