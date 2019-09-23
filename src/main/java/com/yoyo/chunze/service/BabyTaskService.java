@@ -176,6 +176,7 @@ public class BabyTaskService {
 	  		{
 	  			taskTotal = new TaskTotal();
 	  			maps.put(iType, taskTotal);
+	  			taskTotal.setTaskType(taskDetail.getTaskType());
 	  			taskDetailRsp.getTotal().add(taskTotal);
 	  		}
 	  		taskTotal.increaseSubTotal();
