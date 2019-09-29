@@ -113,7 +113,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.github.tobato</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>1.25.10-lgq</version>
+		</dependency>
 		<dependency>
 			<groupId>com.xinwei</groupId>
 			<artifactId>bankproxy</artifactId>
